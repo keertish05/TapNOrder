@@ -10,51 +10,51 @@ No waiting, no confusion, no awkwardly trying to get the waiter’s attention
 
 At the same time, it helps restaurants manage orders better, reduce chaos, and just run things more smoothly.
 
-What this project is about
+# What this project is about
 
 This isn’t just a frontend or just documentation.
 
 This repo has both:
 
-Proper system design & documentation
-A working customer-side interface
+# Proper system design & documentation
+# A working customer-side interface
 
 So it’s basically the full thought process of building a real product from idea → design → implementation.
 
-Objective (and the pain points)
+# Objective (and the pain points)
 
 This project started with a simple observation:
 Dining out is fun… but the process? Not always.
 
-Some real problems:
+# Some real problems:
 
-Waiting too long just to place an order
-Difficulty getting the waiter’s attention
-Confusion in group orders (who ordered what )
-Lack of transparency in billing
-No personalization in recommendations
-Restaurants struggling with order management during rush hours
+1. Waiting too long just to place an order
+2. Difficulty getting the waiter’s attention
+3. Confusion in group orders (who ordered what )
+4. Lack of transparency in billing
+5. No personalization in recommendations
+6. Restaurants struggling with order management during rush hours
 
-Objective:
+# Objective:
 To build a system that:
 
-reduces waiting time
-simplifies group ordering
-improves communication between customers & staff
-adds a personalized + interactive layer to dining
-and makes the whole experience feel effortless
-Project Portfolio
+1. reduces waiting time
+2. simplifies group ordering
+3. improves communication between customers & staff
+4. adds a personalized + interactive layer to dining
+5. and makes the whole experience feel effortless
+6. Project Portfolio
 
 This repository works like a project portfolio — not just code, but the entire journey of building the system.
 
-It includes:
+# It includes:
 
 problem understanding
 system design decisions
 structured documentation (SRS, SDD, UML)
 and the actual implementation
 
-Basically, if someone goes through this repo, they can understand:
+# Basically, if someone goes through this repo, they can understand:
 
 what was built
 why it was built
