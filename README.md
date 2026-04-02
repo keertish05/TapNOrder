@@ -1,8 +1,6 @@
 
 # TapNOrder – Scan.Order.Relax.
 
-TapNOrder – Scan. Order. Relax.
-
 TapNOrder is a QR-based table-side ordering system built to make dining smoother, faster, and honestly… way more fun.
 
 The idea is super simple:
@@ -21,7 +19,7 @@ This repo has both:
 Proper system design & documentation
 A working customer-side interface
 
-So it’s basically the full thought process of building a real product — from idea → design → implementation.
+So it’s basically the full thought process of building a real product from idea → design → implementation.
 
 Objective (and the pain points)
 
