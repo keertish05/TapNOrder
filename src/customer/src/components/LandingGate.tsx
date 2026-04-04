@@ -17,7 +17,7 @@ export default function LandingGate({ onScan }: LandingGateProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[200] bg-[#050505] flex items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-[200] bg-[#FDFCF0] flex items-center justify-center overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-accent/10 blur-[120px] rounded-full" />

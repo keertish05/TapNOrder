@@ -107,7 +107,7 @@ function AppContent() {
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-accent/30 selection:text-accent overflow-x-hidden cursor-none">
+    <div className="min-h-screen bg-[#FDFCF0] text-black font-sans selection:bg-accent/30 selection:text-accent overflow-x-hidden cursor-none">
       {/* Custom Cursor */}
       <motion.div
         className="fixed top-0 left-0 w-8 h-8 bg-accent/20 rounded-full pointer-events-none z-[9999] backdrop-blur-[2px] border border-accent/30 hidden md:block"

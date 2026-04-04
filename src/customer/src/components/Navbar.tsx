@@ -34,8 +34,8 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
             >
               <UtensilsCrossed className="w-6 h-6 text-white" />
             </motion.div>
-            <span className={`text-2xl font-display font-black tracking-tighter uppercase ${isHome ? 'text-white' : 'text-ink'}`}>
-              Tap<span className="text-primary">N</span>Order
+            <span className={`text-2xl font-display font-black tracking-tighter uppercase ${ 'text-ink'}`}>
+              Tap<span className="text-[#D32F2F]">N</span>Order
             </span>
           </Link>
 
@@ -48,16 +48,14 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
           )}
         </div>
 
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-4 sm:gap-6 ">
           {/* Table Number Badge */}
           {tableId && (
             <div className={`hidden sm:flex items-center gap-2 px-4 py-2 rounded-full border ${
-              isHome 
-                ? 'bg-white/10 border-white/10 text-white' 
-                : 'bg-primary/5 border-primary/10 text-primary'
+                 'bg-primary/5 border-primary/10 text-primary'
             }`}>
-              <MapPin className="w-3.5 h-3.5" />
-              <span className="text-[10px] font-display font-black uppercase tracking-[0.2em]">Table {tableId}</span>
+              <MapPin className="w-3.5 h-3.5 text-black" />
+              <span className="text-[10px] font-display text-black font-black uppercase tracking-[0.2em]">Table {tableId}</span>
             </div>
           )}
 
@@ -65,8 +63,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsScannerOpen(true)}
-            className={`p-3 rounded-2xl transition-all ${
-              isHome ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-ink/40 hover:text-primary hover:bg-primary/5'
+            className={`p-3 rounded-2xl transition-all ${'text-ink/40 hover:text-primary hover:bg-primary/5'
             }`}
           >
             <QrCode className="w-6 h-6" />
@@ -87,9 +84,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
             whileTap={{ scale: 0.95 }}
             onClick={onCartClick}
             className={`relative p-3.5 rounded-2xl border transition-all shadow-xl ${
-              isHome 
-                ? 'bg-white/10 border-white/10 text-white hover:bg-white/20' 
-                : 'bg-white border-primary/5 text-ink hover:bg-primary/5'
+                'bg-white border-primary/5 text-ink hover:bg-primary/5'
             }`}
           >
             <ShoppingBag className="w-6 h-6" />
@@ -108,7 +103,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className={`p-3 rounded-2xl transition-all ${
-              isHome ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-ink/40 hover:text-primary hover:bg-primary/5'
+               'text-ink/40 hover:text-primary hover:bg-primary/5'
             }`}
           >
             <User className="w-6 h-6" />
@@ -118,7 +113,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className={`md:hidden p-3 rounded-2xl transition-all ${
-              isHome ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-ink/40 hover:text-primary hover:bg-primary/5'
+              'text-ink/40 hover:text-primary hover:bg-primary/5'
             }`}
           >
             <MenuIcon className="w-6 h-6" />
