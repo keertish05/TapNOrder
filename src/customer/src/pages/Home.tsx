@@ -2,12 +2,20 @@ import { motion } from 'motion/react';
 import { QrCode, ArrowRight, Sparkles, Clock, Users, Flame } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { MOODS } from '../data';
+import QRScanner from '../components/QRScanner.tsx';
+import { useState } from 'react';
 
 export default function Home() {
   const navigate = useNavigate();
 
   const handleMoodSelect = (moodId: string) => {
     navigate(`/menu?mood=${moodId}`);
+  };
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+  
+  const handleScan = (data: string) => {
+    // This is now handled by LandingGate, but we keep it for manual re-scans
+    console.log('Re-scanned:', data);
   };
 
   return (
@@ -33,8 +41,8 @@ export default function Home() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="mb-8 flex flex-col items-center"
           >
-            <span className="text-primary text-[10px] font-display font-black uppercase tracking-[0.5em] mb-4">Est. 2024</span>
-            <h2 className="font-serif italic text-3xl text-ink/80 tracking-[0.2em] uppercase">Spice Villa</h2>
+            <span className="text-primary text-[10px] font-display font-black uppercase tracking-[0.5em] mb-4">Est. 2026</span>
+            <h2 className="font-serif italic text-3xl text-ink/80 tracking-[0.2em] uppercase">TapNOrder</h2>
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-primary/30 to-transparent mt-4" />
           </motion.div>
 
@@ -49,7 +57,7 @@ export default function Home() {
               <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
               <div className="absolute inset-0 w-2.5 h-2.5 rounded-full bg-green-500 animate-ping opacity-75" />
             </div>
-            <span className="text-[10px] font-display font-black text-ink/40 uppercase tracking-[0.3em]">Table #12 • Active Session</span>
+            <span className="text-[10px] font-display font-black text-ink/40 uppercase tracking-[0.3em]">Total Active  •  Restaurant #1 </span>
           </motion.div>
 
           <motion.h1
@@ -66,31 +74,33 @@ export default function Home() {
           </motion.p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 mb-24">
-            <Link to="/menu">
+
               <motion.button
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="red-gradient text-white px-14 py-6 rounded-[2rem] font-display font-black text-xl flex items-center gap-5 group deep-shadow border border-white/20"
+                onClick={() => setIsScannerOpen(true)}
+                
+                className="red-gradient text-white px-14 py-6 rounded-[2rem] font-display font-black text-l flex items-center gap-5 group deep-shadow border border-white/20"
               >
                 Start Ordering
                 <QrCode className="w-6 h-6 group-hover:rotate-12 transition-transform duration-500" />
               </motion.button>
-            </Link>
+
             
             <Link to="/menu">
               <motion.button
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-ink px-14 py-6 rounded-[2rem] font-display font-black text-xl border border-primary/5 flex items-center gap-5 hover:bg-primary/5 transition-all soft-shadow"
+                className="bg-white text-ink px-14 py-6 rounded-[2rem] font-display font-black text-l border border-primary/5 flex items-center gap-5 hover:bg-primary/5 transition-all soft-shadow"
               >
-                Browse Menu
+                Learn More
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform duration-500" />
               </motion.button>
             </Link>
           </div>
 
           {/* Real-world touches: People at table */}
-          <div className="flex flex-col items-center gap-6 mb-12">
+          {/* <div className="flex flex-col items-center gap-6 mb-12">
             <div className="flex -space-x-4">
               {[1, 2, 3, 4].map((i) => (
                 <motion.div 
@@ -113,7 +123,7 @@ export default function Home() {
               </motion.div>
             </div>
             <p className="text-[10px] font-display font-black text-ink/20 uppercase tracking-[0.4em]">6 People at your table</p>
-          </div>
+          </div> */}
         </motion.div>
       </section>
 
@@ -230,6 +240,12 @@ export default function Home() {
         </div>
         <p className="text-[10px] font-display font-black text-ink/10 uppercase tracking-[0.5em]">TapNOrder © 2026</p>
       </footer>
+      
+            <QRScanner 
+              isOpen={isScannerOpen} 
+              onClose={() => setIsScannerOpen(false)} 
+              onScan={handleScan} 
+            />
     </div>
   );
 }

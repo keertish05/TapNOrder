@@ -3,6 +3,7 @@ import { Search, ShoppingBag, User, UtensilsCrossed, Menu as MenuIcon, QrCode, M
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import QRScanner from './QRScanner';
+import { useSearchParams } from 'react-router-dom';
 
 interface NavbarProps {
   cartCount: number;
@@ -14,6 +15,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
   const location = useLocation();
   const isHome = location.pathname === '/';
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [params] = useSearchParams();
 
   const handleScan = (data: string) => {
     // This is now handled by LandingGate, but we keep it for manual re-scans
@@ -41,9 +43,9 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
 
           {!isHome && (
             <div className="hidden md:flex items-center gap-8">
-              <Link to="/menu" className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Menu</Link>
-              <Link to="/billing" className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Orders</Link>
-              <Link to="/rewards" className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Rewards</Link>
+              <Link to={`/menu?${params.toString()}`} className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Menu</Link>
+              <Link to={`/billing?${params.toString()}`} className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Orders</Link>
+              <Link to={`/rewards?${params.toString()}`} className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Rewards</Link>
             </div>
           )}
         </div>

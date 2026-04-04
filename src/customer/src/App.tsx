@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect} from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion/react';
 import { Toaster, toast } from 'sonner';
@@ -8,15 +8,16 @@ import Billing from './pages/Billing';
 import Rewards from './pages/Rewards';
 import Navbar from './components/Navbar';
 import CartDrawer from './components/CartDrawer';
-import Magnetic from './components/Magnetic';
 import { Dish, CartItem } from './types';
+import { useSearchParams } from 'react-router-dom';
+
+
 
 function AppContent() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-  const [tableId, setTableId] = useState<string | null>('4'); // Defaulting to 4 for demo
   const navigate = useNavigate();
 
   const cursorX = useMotionValue(-100);
@@ -25,6 +26,17 @@ function AppContent() {
   const springConfig = { damping: 25, stiffness: 700 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
+
+  const [params] = useSearchParams();
+  const tableId = params.get("table");
+  const restaurant = params.get("restaurant");
+  
+
+  useEffect(() => {
+  if (tableId && restaurant) {
+    navigate(`/menu?restaurant=${restaurant}&table=${tableId}`);
+    }
+  }, [tableId, restaurant]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
