@@ -3,10 +3,6 @@
 ## 📌 Project Details
 
 - **Project Name:** TapNOrder  
-- **Name:** Gaurav Singh Bora  
-- **Roll No:** 2023btech032  
-- **College:** JK Lakshmipat University  
-- **Date:** April 2026  
 
 ---
 
@@ -32,7 +28,8 @@ This document contains the test cases for the TapNOrder system, which allows use
 | Status | Pass |
 
 📸 **Screenshot:**  
-![Homepage](./assets/homepage.png)
+![Customer side  Homepage](./photos/image2.png)
+![Restaurant side Homepage](./photos/image1.png)
 
 ---
 
@@ -64,7 +61,7 @@ This document contains the test cases for the TapNOrder system, which allows use
 | Status | Pass |
 
 📸 **Screenshot:**  
-![Dashboard](./assets/dashboard.png)
+![Restaurant side Dashboard](./photos/Restaurant_side_dashboard.png)
 
 ---
 
@@ -80,7 +77,7 @@ This document contains the test cases for the TapNOrder system, which allows use
 | Status | Pass |
 
 📸 **Screenshot:**  
-![Add Menu](./assets/add-menu.png)
+![Add Menu](./photos/add_menu.png)
 
 ---
 
@@ -96,7 +93,7 @@ This document contains the test cases for the TapNOrder system, which allows use
 | Status | Pass |
 
 📸 **Screenshot:**  
-![Menu](./assets/menu.png)
+![Menu](./photos/menu_view.png)
 
 ---
 
@@ -112,7 +109,7 @@ This document contains the test cases for the TapNOrder system, which allows use
 | Status | Pass |
 
 📸 **Screenshot:**  
-![Billing](./assets/billing.png)
+![Billing](./photos/billing.png)
 
 ---
 
