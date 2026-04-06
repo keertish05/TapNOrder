@@ -1,114 +1,181 @@
+# TapNOrder – Scan. Order. Relax.
 
-# TapNOrder – Scan.Order.Relax.
+TapNOrder is a QR-based table-side ordering system built to make dining smoother, faster, and honestly more enjoyable.
 
-TapNOrder is a QR-based table-side ordering system built to make dining smoother, faster, and honestly… way more fun.
+The idea is simple:  
+You scan a QR at your table → browse → order → relax.  
 
-The idea is super simple:
-You scan a QR at your table → browse → order → chill.
+No waiting, no confusion, no awkwardly trying to get the waiter’s attention.
 
-No waiting, no confusion, no awkwardly trying to get the waiter’s attention 
+At the same time, it helps restaurants manage orders better, reduce chaos, and improve overall service.
 
-At the same time, it helps restaurants manage orders better, reduce chaos, and just run things more smoothly.
+---
 
-# What this project is about
+## What this project is about
 
-This isn’t just a frontend or just documentation.
+This is not just a frontend or just documentation.
 
-This repo has both:
+This repository includes:
+- Proper system design and documentation  
+- A working customer-side interface  
 
-# Proper system design & documentation
-# A working customer-side interface
+It represents the full thought process behind building a real product — from idea to design to implementation.
 
-So it’s basically the full thought process of building a real product from idea → design → implementation.
+---
 
-# Objective (and the pain points)
+## Objective (and the pain points)
 
-This project started with a simple observation:
-Dining out is fun… but the process? Not always.
+This project started with a simple observation:  
+Dining out is fun, but the process is often inefficient.
 
-# Some real problems:
+### Key pain points
+- Waiting too long to place an order  
+- Difficulty getting the waiter’s attention  
+- Confusion in group orders  
+- Lack of transparency in billing  
+- No personalization in recommendations  
+- Restaurants struggling to manage orders during peak hours  
 
-1. Waiting too long just to place an order
-2. Difficulty getting the waiter’s attention
-3. Confusion in group orders (who ordered what )
-4. Lack of transparency in billing
-5. No personalization in recommendations
-6. Restaurants struggling with order management during rush hours
-
-# Objective:
+### Objective
 To build a system that:
+- reduces waiting time  
+- simplifies group ordering  
+- improves communication between customers and staff  
+- adds a personalized and interactive dining layer  
+- makes the overall experience seamless  
 
-1. reduces waiting time
-2. simplifies group ordering
-3. improves communication between customers & staff
-4. adds a personalized + interactive layer to dining
-5. and makes the whole experience feel effortless
-6. Project Portfolio
+---
 
-This repository works like a project portfolio — not just code, but the entire journey of building the system.
+## Project Portfolio
 
-# It includes:
+This repository works as a complete project portfolio.
 
-problem understanding
-system design decisions
-structured documentation (SRS, SDD, UML)
-and the actual implementation
+It includes:
+- problem understanding  
+- system design decisions  
+- structured documentation (SRS, SDD, UML)  
+- implementation  
 
-# Basically, if someone goes through this repo, they can understand:
+Anyone going through this repository can understand:
+- what was built  
+- why it was built  
+- how it was built  
 
-what was built
-why it was built
-and how it was built
-Project Documentation
+---
 
-Inside the repo, you’ll find:
+## Project Documentation
 
-Software Requirements Specification (SRS)
-Software Design Description (SDD)
-UML Diagrams (Class, Sequence, State Charts)
+The repository contains:
 
-These cover:
+- Software Requirements Specification (SRS)  
+- Software Design Description (SDD)  
+- UML Diagrams (Class, Sequence, State Charts)  
 
-how the system works
-how everything is structured internally
-how users (customers + staff) interact with it
-Core Features
-Ordering Experience
-QR-based table access (no login needed)
-Mood-based dish recommendations (happy, comfort, spicy, etc.)
-Smart filters (diet, spice, price, time)
-“Surprise Me” feature (random dish picker)
-Social Dining
-Shared table cart (order together easily)
-Live table photo billboard (upload & like food pics)
-Inter-table interactions (safe preset messages)
-“Trending at your table” insights
-Fun Add-ons
-Song request system (send songs to restaurant)
-AR dish preview (see portion size before ordering)
-Service Features
-One-tap service buttons:
-Call waiter
-Water / napkins / cutlery
-Table change request
-Billing & Payments
-Live running bill
-Split options (equal / item-wise / custom)
-UPI, cards, wallets
-Group tip jar
-Engagement & Rewards
-Loyalty points for activity
-Rewards for future visits
-Emoji-based quick feedback
+These explain:
+- system functionality  
+- architecture and design  
+- user interaction (customers and staff)  
 
-Thought Behind It
+---
 
-This is not just a “food ordering app”.
+## Core Features
 
-It’s built around:
+### Ordering Experience
+- QR-based table access (no login required)  
+- Mood-based dish recommendations  
+- Smart filters (diet, spice, price, time)  
+- “Surprise Me” feature  
 
-reducing friction in dining
-making group ordering easier
-adding a social + interactive layer to restaurants
+### Social Dining
+- Shared table cart  
+- Live table photo billboard  
+- Inter-table interactions (safe preset messages)  
+- Table-level trending insights  
 
-Basically… turning a normal dinner into a small experience.
+### Fun Add-ons
+- Song request system  
+- AR dish preview  
+
+### Service Features
+- One-tap service buttons:
+  - Call waiter  
+  - Water / napkins / cutlery  
+  - Table change request  
+
+### Billing and Payments
+- Live running bill  
+- Split options (equal, item-wise, custom)  
+- UPI, cards, wallets  
+- Group tip system  
+
+### Engagement and Rewards
+- Loyalty points  
+- Reward system  
+- Quick feedback  
+
+---
+
+## Restaurant Panel (SaaS Dashboard)
+
+A professional SaaS-style restaurant dashboard called **TapNOrder Restaurant Panel** is also part of the system design.
+
+It follows a desktop-first responsive design and is inspired by modern POS systems.
+
+### Main Screen
+- Summary cards:
+  - Active Orders  
+  - Preparing Orders  
+  - Ready Orders  
+  - Total Revenue Today  
+- Real-time activity feed  
+
+### Navigation
+Sidebar navigation with icons:
+- Dashboard  
+- Orders  
+- Kitchen  
+- Menu  
+- Tables  
+- Analytics  
+- Settings  
+
+### Design Direction
+- Clean and minimal interface  
+- Professional layout  
+- Inspired by modern POS systems like Toast POS, Petpooja, and Square  
+
+---
+
+## Tech Stack (Customer Side)
+
+- React + TypeScript  
+- Vite  
+- Modern UI with animations  
+- Component-based architecture  
+
+---
+
+## Thought Behind It
+
+This is not just a food ordering app.
+
+It focuses on:
+- reducing friction in dining  
+- simplifying group interactions  
+- adding a social and interactive layer  
+
+The goal is to turn a normal dining experience into something more seamless and engaging.
+
+---
+
+## Status
+
+Still evolving.  
+More features and improvements are in progress.
+
+---
+
+## Closing Note
+
+Built as part of an academic and product exploration project.  
+The aim is to bridge design, technology, and real-world usability.
