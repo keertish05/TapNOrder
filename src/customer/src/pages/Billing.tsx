@@ -11,7 +11,7 @@ export default function Billing({ total }: { total: number }) {
   const grandTotal = total + tax + serviceCharge + tip;
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-20">
+    <div className="max-w-6xl mx-auto px-6 pt-40 pb-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
         {/* Bill Details */}
         <div className="space-y-12">
@@ -103,14 +103,14 @@ export default function Billing({ total }: { total: number }) {
               <SplitButton
                 active={splitType === 'equal'}
                 onClick={() => setSplitType('equal')}
-                icon={<Users className="w-8 h-8" />}
+                icon={<Users className="w-8 h-8 text-black" />}
                 label="Equal Split"
                 description="Divide total by 4 people"
               />
               <SplitButton
                 active={splitType === 'items'}
                 onClick={() => setSplitType('items')}
-                icon={<Receipt className="w-8 h-8" />}
+                icon={<Receipt className="w-8 h-8 text-black" />}
                 label="By Items"
                 description="Pay for what you ordered"
               />
@@ -123,7 +123,7 @@ export default function Billing({ total }: { total: number }) {
           <motion.div 
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-ink rounded-[4rem] p-12 text-white deep-shadow relative overflow-hidden border border-white/5"
+            className="bg-ink rounded-[4rem] p-12 text-black deep-shadow relative overflow-hidden border border-white/5"
           >
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-12">
@@ -146,7 +146,7 @@ export default function Billing({ total }: { total: number }) {
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
               </motion.button>
               
-              <p className="text-center text-[10px] font-bold text-white/20 uppercase tracking-[0.3em] mt-8">
+              <p className="text-center text-[10px] font-bold text-black/20 uppercase tracking-[0.3em] mt-8">
                 Encrypted & Secure Payment Processing
               </p>
             </div>
@@ -224,13 +224,13 @@ function PaymentMethod({ icon, label }: any) {
   return (
     <motion.button 
       whileHover={{ x: 10, backgroundColor: 'rgba(255,255,255,0.05)' }}
-      className="w-full p-7 bg-white/5 rounded-[2rem] border border-white/5 flex items-center justify-between transition-all group"
+      className="w-full p-7 bg-black/5 rounded-[2rem] border border-black/5 flex items-center justify-between transition-all group"
     >
       <div className="flex items-center gap-6">
-        <div className="text-accent group-hover:scale-110 transition-transform group-hover:text-white">{icon}</div>
-        <span className="font-display font-black text-sm text-white/50 group-hover:text-white transition-colors uppercase tracking-[0.2em]">{label}</span>
+        <div className="text-accent group-hover:scale-110 transition-transform group-hover:text-black">{icon}</div>
+        <span className="font-display font-black text-sm text-black/50 group-hover:text-black transition-colors uppercase tracking-[0.2em]">{label}</span>
       </div>
-      <ChevronRight className="w-5 h-5 text-white/10 group-hover:text-accent group-hover:translate-x-1 transition-all" />
+      <ChevronRight className="w-5 h-5 text-black/10 group-hover:text-accent group-hover:translate-x-1 transition-all" />
     </motion.button>
   );
 }

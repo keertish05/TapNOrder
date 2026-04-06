@@ -3,7 +3,7 @@ import { Search, ShoppingBag, User, UtensilsCrossed, Menu as MenuIcon, QrCode, M
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import QRScanner from './QRScanner';
-import { useSearchParams } from 'react-router-dom';
+import { NavLink,useSearchParams } from 'react-router-dom';
 
 interface NavbarProps {
   cartCount: number;
@@ -28,7 +28,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
       isHome ? 'bg-transparent' : 'bg-bg/80 backdrop-blur-xl border-b border-primary/5'
     }`}>
       <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-[4rem]">
           <Link to="/" className="flex items-center gap-3 group">
             <motion.div 
               whileHover={{ rotate: 12, scale: 1.1 }}
@@ -43,9 +43,40 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
 
           {!isHome && (
             <div className="hidden md:flex items-center gap-8">
-              <Link to={`/menu?${params.toString()}`} className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Menu</Link>
-              <Link to={`/billing?${params.toString()}`} className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Orders</Link>
-              <Link to={`/rewards?${params.toString()}`} className="text-[10px] font-display font-bold uppercase tracking-[0.3em] text-ink/40 hover:text-primary transition-colors">Rewards</Link>
+              
+              <NavLink
+                to={`/menu?${params.toString()}`}
+                className={({ isActive }) =>
+                  `text-[10px] font-display font-bold uppercase tracking-[0.3em] transition-colors ${
+                    isActive ? "text-[#D32F2F]" : "text-ink/40 hover:text-primary"
+                  }`
+                }
+              >
+                Menu
+              </NavLink>
+
+              <NavLink
+                to={`/billing?${params.toString()}`}
+                className={({ isActive }) =>
+                  `text-[10px] font-display font-bold uppercase tracking-[0.3em] transition-colors ${
+                    isActive ? "text-[#D32F2F]" : "text-ink/40 hover:text-primary"
+                  }`
+                }
+              >
+                My Orders
+              </NavLink>
+
+              <NavLink
+                to={`/rewards?${params.toString()}`}
+                className={({ isActive }) =>
+                  `text-[10px] font-display font-bold uppercase tracking-[0.3em] transition-colors ${
+                    isActive ? "text-[#D32F2F]" : "text-ink/40 hover:text-primary"
+                  }`
+                }
+              >
+                Rewards
+              </NavLink>
+
             </div>
           )}
         </div>
@@ -61,6 +92,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
             </div>
           )}
 
+          {isHome && (
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -70,6 +102,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
           >
             <QrCode className="w-6 h-6" />
           </motion.button>
+          )}
 
           {!isHome && (
             <motion.button 

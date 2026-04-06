@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useScroll } from 'motion/react';
 import { Flame, Star, Sparkles, Gift, ArrowRight, MousePointer2, Search, Filter, Music } from 'lucide-react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { DISHES, MOODS } from "../data";
+import {  MOODS } from "../data";
 import DishCard from "../components/DishCard";
 import DishModal from "../components/DishModal";
 import LiveOrderStatus, { OrderStep } from '../components/LiveOrderStatus';
@@ -13,6 +13,11 @@ import ARPreview from '../components/ARPreview';
 import SurpriseWheel from '../components/SurpriseWheel';
 import Magnetic from '../components/Magnetic';
 import { Dish } from '../types';
+import { useMenu } from '../context/MenuContext';
+import { use } from 'motion/react-client';
+
+
+
 
 interface MenuProps {
   onAddToCart: (dish: Dish, quantity: number, customs: any) => void;
@@ -22,6 +27,8 @@ export default function Menu({ onAddToCart }: MenuProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const moodParam = searchParams.get('mood');
+  const restaurant = searchParams.get('restaurant');
+  const tableId = searchParams.get('table');
 
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedMood, setSelectedMood] = useState<string | null>(moodParam);
@@ -31,6 +38,14 @@ export default function Menu({ onAddToCart }: MenuProps) {
   const [surpriseDish, setSurpriseDish] = useState<Dish | null>(null);
   const [isWheelOpen, setIsWheelOpen] = useState(false);
   const [orderStatus, setOrderStatus] = useState<OrderStep>('preparing');
+
+  const { dishes, fetchMenu, loading } = useMenu();
+
+  useEffect(() => {
+    if (restaurant) {
+      fetchMenu(restaurant);
+    }
+  }, [restaurant]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,10 +61,10 @@ export default function Menu({ onAddToCart }: MenuProps) {
     }
   }, [moodParam]);
 
-  const categories = ['All', ...Array.from(new Set(DISHES.map(d => d.category)))];
+  const categories = ['All', ...Array.from(new Set(dishes.map(d => d.category)))];
 
   const filteredDishes = useMemo(() => {
-    return DISHES.filter(dish => {
+    return dishes.filter(dish => {
       const categoryMatch = selectedCategory === 'All' || dish.category === selectedCategory;
       const moodMatch = !selectedMood || (dish.moods && dish.moods.includes(selectedMood));
       return categoryMatch && moodMatch;
@@ -82,17 +97,16 @@ export default function Menu({ onAddToCart }: MenuProps) {
         style={{ scaleX }}
       />
 
-      <main className="max-w-7xl mx-auto px-4 space-y-20">
+      <main className="max-w-7xl mx-auto px-4  space-y-20">
         {/* Header Section */}
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 text-primary mb-4">
               <Sparkles className="w-5 h-5" />
-              <span className="text-xs font-display font-bold uppercase tracking-[0.3em]">Spice Villa Menu</span>
+              <span className="text-xs font-display font-bold uppercase tracking-[0.3em]">Curated flavors</span>
             </div>
-            <h1 className="text-5xl sm:text-7xl font-display font-black text-ink uppercase leading-[0.9] tracking-tight">
-              Curated <br />
-              <span className="text-primary italic font-serif lowercase tracking-normal">Flavors</span>
+            <h1 className="text-5xl sm:text-7xl font-serif italic font-black text-ink lowercase  leading-[0.9] tracking-tight">
+              {restaurant}<br />
             </h1>
           </div>
           
@@ -105,99 +119,24 @@ export default function Menu({ onAddToCart }: MenuProps) {
                 className="bg-white border border-primary/5 rounded-2xl py-4 pl-12 pr-6 text-sm font-medium focus:outline-none focus:border-primary/20 soft-shadow w-64 transition-all"
               />
             </div>
-            <button className="p-4 bg-white rounded-2xl border border-primary/5 soft-shadow hover:bg-primary/5 transition-colors">
+            {/* <button className="p-4 bg-white rounded-2xl border border-primary/5 soft-shadow hover:bg-primary/5 transition-colors">
               <Filter className="w-5 h-5 text-primary" />
-            </button>
-          </div>
-        </header>
-
-        {/* Live Order Status */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <LiveOrderStatus status={orderStatus} estimatedTime={12} />
-        </motion.div>
-
-        {/* Music & Now Playing Integration */}
-        <section className="pt-12">
-          <div className="flex items-center gap-4 mb-8">
-            <div className="flex items-center gap-3 text-primary">
-              <Music className="w-5 h-5" />
-              <span className="text-xs font-display font-black uppercase tracking-[0.4em]">Table Music</span>
-            </div>
-            <div className="h-px flex-1 bg-primary/5" />
-          </div>
-          <SongRequest />
-        </section>
-
-        {/* Mood Selection (Refined) */}
-        <section className="relative">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <h2 className="text-xs font-display font-bold text-ink/30 uppercase tracking-[0.4em]">
-                Filter by Mood
-              </h2>
-              {selectedMood && (
-                <button 
-                  onClick={() => {
-                    setSelectedMood(null);
-                    setSearchParams({});
-                  }}
-                  className="text-[10px] font-display font-bold text-primary uppercase tracking-widest hover:underline"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
-          </div>
-          
-          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
-            {MOODS.map((mood) => (
+            </button> */}
+            <Magnetic>
               <motion.button
-                key={mood.id}
-                whileHover={{ y: -4 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  setSelectedMood(mood.id);
-                  setSearchParams({ mood: mood.id });
-                }}
-                className={`flex-shrink-0 px-6 py-4 rounded-2xl flex items-center gap-3 transition-all border ${
-                  selectedMood === mood.id 
-                    ? 'bg-primary border-primary text-white deep-shadow' 
-                    : 'bg-white text-ink/40 border-primary/5 hover:border-primary/20 soft-shadow'
-                }`}
+                onClick={handleSurprise}
+                className="bg-accent text-white px-8 bg-[#D32F2F] py-4 rounded-xl font-display font-bold text-[10px] uppercase tracking-[0.2em] flex items-center gap-3 deep-shadow"
               >
-                <span className="text-xl">{mood.emoji}</span>
-                <span className="text-[10px] font-display font-bold uppercase tracking-widest">{mood.label}</span>
+                <Sparkles className="w-4 h-4" />
+                Surprise Me
               </motion.button>
-            ))}
+            </Magnetic>
           </div>
-        </section>
 
-        {/* Active Filter Indicator */}
-        <AnimatePresence>
-          {selectedMood && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="bg-primary/5 border border-primary/10 rounded-3xl p-8 flex items-center justify-between"
-            >
-              <div className="flex items-center gap-6">
-                <span className="text-5xl">{activeMood?.emoji}</span>
-                <div>
-                  <h3 className="text-xl font-display font-black text-ink uppercase tracking-tight">
-                    Curating for your <span className="text-primary">{activeMood?.label}</span> mood
-                  </h3>
-                  <p className="text-xs text-ink/40 font-medium">We've handpicked these dishes just for you.</p>
-                </div>
-              </div>
-              <Sparkles className="w-8 h-8 text-primary/20" />
-            </motion.div>
-          )}
-        </AnimatePresence>
+          
+        </header>
 
         {/* Category Tabs */}
         <section>
@@ -220,17 +159,7 @@ export default function Menu({ onAddToCart }: MenuProps) {
               ))}
             </div>
             
-            <Magnetic>
-              <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleSurprise}
-                className="bg-accent text-white px-8 py-4 rounded-xl font-display font-bold text-[10px] uppercase tracking-[0.2em] flex items-center gap-3 deep-shadow"
-              >
-                <Sparkles className="w-4 h-4" />
-                Surprise Me
-              </motion.button>
-            </Magnetic>
+
           </div>
 
           {/* Main Grid */}
@@ -270,6 +199,95 @@ export default function Menu({ onAddToCart }: MenuProps) {
           )}
         </section>
 
+        {/* Live Order Status */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <LiveOrderStatus status={orderStatus} estimatedTime={12} />
+        </motion.div>
+
+        {/* Music & Now Playing Integration */}
+        <section className="pt-12">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="flex items-center gap-3 text-primary">
+              <Music className="w-5 h-5" />
+              <span className="text-xs font-display font-black uppercase tracking-[0.4em]">Table Music</span>
+            </div>
+            <div className="h-px flex-1 bg-primary/5" />
+          </div>
+          <SongRequest />
+        </section>
+
+        {/* Mood Selection (Refined) */}
+        <section className="relative">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <h2 className="text-xs font-display font-bold text-ink/30 uppercase tracking-[0.4em]">
+                Filter by Mood
+              </h2>
+              {selectedMood && (
+                <button 
+                  onClick={() => {
+                    setSelectedMood(null);
+                    setSearchParams({});
+                  }}
+                  className="text-[10px] font-display font-bold text-primary uppercase tracking-widest border border-primary/50 px-5 py-2 rounded-[15px] hover:underline"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
+          </div>
+          
+          <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+            {MOODS.map((mood) => (
+              <motion.button
+                key={mood.id}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setSelectedMood(mood.id);
+                  setSearchParams({ mood: mood.id });
+                }}
+                className={`flex-shrink-0 px-6 py-4 rounded-2xl flex items-center gap-3 transition-all border ${
+                  selectedMood === mood.id 
+                    ? 'bg-[#D32F2F] border-primary text-white deep-shadow' 
+                    : 'bg-white text-ink/40 border-primary/5 hover:border-primary/20 soft-shadow'
+                }`}
+              >
+                <span className="text-xl">{mood.emoji}</span>
+                <span className="text-[10px] font-display font-bold uppercase tracking-widest">{mood.label}</span>
+              </motion.button>
+            ))}
+          </div>
+        </section>
+
+        {/* Active Filter Indicator */}
+        <AnimatePresence>
+          {selectedMood && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="bg-primary/5 border border-primary/10 rounded-3xl p-8 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-6">
+                <span className="text-5xl">{activeMood?.emoji}</span>
+                <div>
+                  <h3 className="text-xl font-display font-black text-ink uppercase tracking-tight">
+                    Curating for your <span className="text-primary">{activeMood?.label}</span> mood
+                  </h3>
+                  <p className="text-xs text-ink/40 font-medium">We've handpicked these dishes just for you.</p>
+                </div>
+              </div>
+              <Sparkles className="w-8 h-8 text-primary/20" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+
         {/* Table Tools Section */}
         <section className="pt-24 border-t border-primary/5">
           <div className="flex items-center gap-4 mb-16">
@@ -292,7 +310,7 @@ export default function Menu({ onAddToCart }: MenuProps) {
           className="bg-white rounded-[3rem] p-10 soft-shadow border border-primary/5 flex flex-col md:flex-row items-center justify-between gap-8 cursor-pointer group"
         >
           <div className="flex items-center gap-6">
-            <div className="w-14 h-14 bg-primary/5 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+            <div className="w-14 h-14 bg-primary/5 rounded-2xl flex items-center justify-center text-primary ">
               <Gift className="w-7 h-7" />
             </div>
             <div>
@@ -329,7 +347,7 @@ export default function Menu({ onAddToCart }: MenuProps) {
         isOpen={isWheelOpen}
         onClose={() => setIsWheelOpen(false)}
         onResult={handleWheelResult}
-        dishes={DISHES}
+        dishes={dishes.filter(d => d.image)}
       />
 
       {/* Surprise Popup */}

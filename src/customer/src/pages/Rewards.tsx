@@ -21,7 +21,7 @@ export default function Rewards() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-16 space-y-12">
+    <div className="max-w-5xl mx-auto px-6 pt-40 pb-16 space-y-12">
       {/* Points Card */}
       <motion.div
         initial={{ y: 30, opacity: 0 }}
@@ -51,7 +51,7 @@ export default function Rewards() {
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleRedeem}
-              className="bg-white text-primary px-10 py-5 rounded-[2rem] font-display font-black text-sm uppercase tracking-widest shadow-2xl flex items-center gap-3"
+              className="bg-white text-[#D32F2F] px-10 py-5 rounded-[2rem] font-display font-black text-sm uppercase tracking-widest shadow-2xl flex items-center gap-3"
             >
               Redeem Rewards <ChevronRight className="w-4 h-4" />
             </motion.button>

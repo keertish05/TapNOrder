@@ -3,6 +3,7 @@ import {ApiError} from '../utils/apiError.js';
 import { ApiResponse } from '../utils/apiResponse.js';
 import { MenuItem } from '../../src/models/menu.model.js';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
+import { Dish } from '../models/Dish.model.js';
 
 export const createMenuItem = asyncHandler(async (req, res) => {
     const restaurantId = req.restaurantId;
@@ -126,4 +127,62 @@ export const getMenuByRestaurant = asyncHandler(async (req, res) => {
         throw new ApiError(404, "No menu items found for this restaurant");
     }
     res.status(200).json(new ApiResponse(200, menuItems, "Menu items retrieved successfully"));
+});
+
+
+// Get Dish by restaurant ID (user view)
+export const getDishesByRestaurant = asyncHandler(async (req, res) => {
+  const restaurantId = req.params.restaurantId;
+    if (!restaurantId) {
+        throw new ApiError(400, "Restaurant ID is required");
+    }
+    const dishes = await Dish.find({ restaurantId: restaurantId });
+    if (!dishes) {
+        throw new ApiError(404, "No dishes found for this restaurant");
+    }
+    res.status(200).json(new ApiResponse(200, dishes, "Dishes retrieved successfully"));
+});
+
+// create dish (restaurant view)
+export const createDish = asyncHandler(async (req, res) => {
+  const restaurantId = req.restaurantId;
+    if (!restaurantId) {
+        throw new ApiError(401, "Unauthorized: Restaurant ID missing");
+    }
+    const { name, description, price, rating, category, isVeg, isJain, isEgg, isGlutenFree, spiceLevel, prepTime, isTrending, moods, portionSize, tasteTags, popularityBadge } = req.body;
+
+    // take file path from multer middleware
+    const fileUrl = req.file ? req.file.path : null;
+    if (!fileUrl) {
+        throw new ApiError(400, "Image file is required");
+    }
+    const imageUrl = await uploadToCloudinary(fileUrl);
+    if (!imageUrl) {
+        throw new ApiError(500, "Failed to upload image to cloud");
+    }
+
+    const newDish = new Dish({
+        name,
+        description,
+        price,
+        rating,
+        category,
+        isVeg,
+        isJain,
+        isEgg,
+        isGlutenFree,
+        spiceLevel,
+        prepTime,
+        isTrending,
+        moods,
+        portionSize,
+        tasteTags,
+        popularityBadge,
+        image: imageUrl.url,
+        restaurantId 
+    });
+
+    await newDish.save();
+
+    res.status(201).json(new ApiResponse(201, newDish, "Dish created successfully"));
 });

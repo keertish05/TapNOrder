@@ -44,7 +44,7 @@ export default function DishModal({ dish, onClose, onAddToCart, onARClick }: Dis
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: '100%', opacity: 0, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-2xl bg-bg rounded-t-[3rem] sm:rounded-[3.5rem] overflow-hidden deep-shadow border border-primary/5 max-h-[95vh] flex flex-col"
+            className="relative w-full max-w-[80rem] bg-bg rounded-t-[3rem] sm:rounded-[3.5rem] overflow-hidden deep-shadow border border-primary/5 max-h-[85vh] flex flex-col"
           >
             {/* Close Button */}
             <motion.button
@@ -100,7 +100,7 @@ export default function DishModal({ dish, onClose, onAddToCart, onARClick }: Dis
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => onARClick(dish)}
-                  className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-xl px-6 py-3 rounded-2xl text-ink text-[10px] font-display font-bold uppercase tracking-widest flex items-center gap-3 border border-primary/5 soft-shadow"
+                  className="absolute bottom-10 left-8 bg-white/90 backdrop-blur-xl px-6 py-3 rounded-2xl text-ink text-[10px] font-display font-bold uppercase tracking-widest flex items-center gap-3 border border-primary/5 soft-shadow"
                 >
                   <Camera className="w-4 h-4 text-primary" />
                   Experience in AR
@@ -117,7 +117,7 @@ export default function DishModal({ dish, onClose, onAddToCart, onARClick }: Dis
                   <div className="mb-8">
                     <div className="flex items-center gap-3 mb-4">
                       {dish.popularityBadge && (
-                        <div className="bg-accent text-white px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
+                        <div className="bg-green-600 text-white px-3 py-1 rounded-full flex items-center gap-1.5 shadow-lg">
                           <Sparkles className="w-3 h-3 fill-white" />
                           <span className="text-[9px] font-display font-black uppercase tracking-widest">{dish.popularityBadge}</span>
                         </div>
