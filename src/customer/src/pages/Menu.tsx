@@ -14,7 +14,6 @@ import SurpriseWheel from '../components/SurpriseWheel';
 import Magnetic from '../components/Magnetic';
 import { Dish } from '../types';
 import { useMenu } from '../context/MenuContext';
-import { use } from 'motion/react-client';
 
 
 
@@ -42,9 +41,9 @@ export default function Menu({ onAddToCart }: MenuProps) {
   const { dishes, fetchMenu, loading } = useMenu();
 
   useEffect(() => {
-    if (restaurant) {
-      fetchMenu(restaurant);
-    }
+     if (restaurant){
+        fetchMenu( restaurant);
+     }
   }, [restaurant]);
 
   useEffect(() => {
