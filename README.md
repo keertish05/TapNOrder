@@ -1,6 +1,6 @@
 # TapNOrder – Scan. Order. Relax.
 
-TapNOrder is a QR-based table-side ordering system built to make dining smoother, faster, and honestly more enjoyable.
+TapNOrder is a modern **digital restaurant ordering platform** that allows customers to place orders, make payments, and request services — while enabling waiters to manage everything in real-time.
 
 The idea is simple:  
 You scan a QR at your table → browse → order → relax.  
@@ -43,6 +43,219 @@ To build a system that:
 - improves communication between customers and staff  
 - adds a personalized and interactive dining layer  
 - makes the overall experience seamless  
+
+## 🚀 Features
+
+### 👤 Customer Side
+
+* 📱 Browse menu (live from menu-service)
+* 🛒 Add items to cart
+* 💳 Pay via Cash or Online (Razorpay)
+* 🔔 Request services (Water, Waiter, Napkin, etc.)
+* 📊 Track order status live
+
+---
+
+### 🧑‍🍳 Waiter Dashboard
+
+* 📦 View live incoming orders
+* 🔄 Update order status (Preparing → Ready → Served)
+* 🔔 Receive real-time service requests
+* ✅ Mark requests as completed
+
+---
+
+### ⚙️ Backend (Microservices)
+
+* 🔐 Auth Service
+* 🍔 Menu Service
+* 📦 Order Service
+* 💳 Payment Service (Razorpay)
+* 🌐 Gateway
+
+---
+
+## 🏗️ Project Structure
+
+```
+TapNOrder/
+│
+├── src/
+│   ├── customer/              # Customer frontend
+│   ├── Waiter/               # Waiter dashboard
+│   ├── Restaurant/
+│   │   ├── frontend/         # Restaurant UI
+│   │   ├── gateway/          # API gateway
+│   │   └── Services/
+│   │       ├── auth-service
+│   │       ├── menu-service
+│   │       ├── order-service
+│   │       └── payment-service
+│
+├── docs/
+├── test/
+└── README.md
+```
+
+---
+
+## ⚙️ Tech Stack
+
+* **Frontend:** React + Tailwind CSS
+* **Backend:** Node.js + Express
+* **Database:** MongoDB
+* **Real-time:** Socket.io
+* **Payments:** Razorpay
+* **Architecture:** Microservices
+
+---
+
+## 🧑‍💻 Setup Instructions
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/your-username/TapNOrder.git
+cd TapNOrder
+```
+
+---
+
+### 2️⃣ Install Dependencies
+
+Install in each service:
+
+```bash
+cd src/Restaurant/Services/order-service
+npm install
+```
+
+Repeat for:
+
+* menu-service
+* auth-service
+* payment-service
+* gateway
+* frontend apps
+
+---
+
+### 3️⃣ Setup Environment Variables
+
+Create `.env` in each service:
+
+#### Example (order-service)
+
+```env
+PORT=4003
+MONGO_URI=your_mongodb_url
+GETMENU_API_URL=http://localhost:4001/api/v1/menu
+PAYMENT_SERVICE_URL=http://localhost:4004
+FRONTEND_URL=http://localhost:5173
+```
+
+#### Example (payment-service)
+
+```env
+RAZORPAY_KEY_ID=rzp_test_xxxxx
+RAZORPAY_KEY_SECRET=xxxxx
+```
+
+---
+
+### 4️⃣ Start Services
+
+Run each service separately:
+
+```bash
+npm run dev
+```
+
+Start order:
+
+1. menu-service
+2. order-service
+3. payment-service
+4. gateway
+5. frontend apps
+
+---
+
+## 🔄 Application Flow
+
+### 🛒 Order Flow
+
+1. Customer selects items
+2. Order sent to backend
+3. Backend verifies menu items
+4. If Cash → order created
+5. If Online → Razorpay opens → confirmOrder
+6. Order stored in DB
+
+---
+
+### 🔔 Service Request Flow
+
+1. Customer clicks "Water / Waiter"
+2. Request stored in DB
+3. Socket emits event
+4. Waiter dashboard updates instantly
+
+---
+
+### ⚡ Real-time System
+
+* `orderCreated` → new order
+* `orderUpdated` → status update
+* `serviceRequest` → new request
+* `serviceRequestUpdated` → completed
+
+---
+
+## 🌐 API Endpoints (Important)
+
+### 📦 Orders
+
+```
+POST   /api/v1/order/create
+POST   /api/v1/order/confirm
+PATCH  /api/v1/order/:id
+GET    /api/v1/order
+```
+
+---
+
+### 🔔 Service Requests
+
+```
+POST   /api/v1/service
+GET    /api/v1/service
+PATCH  /api/v1/service/:id
+```
+
+---
+
+## 💡 Usage Guide
+
+### 👤 Customer
+
+1. Open app
+2. Scan table QR / enter table number
+3. Browse menu
+4. Add items → Checkout
+5. Choose payment
+6. Track order
+7. Use quick buttons for service
+
+---
+
+### 🧑‍🍳 Waiter
+
+1. Open `/waiter` dashboard
+2. View incoming orders
+3. Update status
+4. Handle service requests
+5. Mark requests completed
 
 ---
 
@@ -144,14 +357,6 @@ Sidebar navigation with icons:
 - Professional layout  
 - Inspired by modern POS systems like Toast POS, Petpooja, and Square  
 
----
-
-## Tech Stack (Customer Side)
-
-- React + TypeScript  
-- Vite  
-- Modern UI with animations  
-- Component-based architecture  
 
 ---
 
