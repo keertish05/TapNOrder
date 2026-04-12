@@ -179,12 +179,3 @@ More features and improvements are in progress.
 
 Built as part of an academic and product exploration project.  
 The aim is to bridge design, technology, and real-world usability.
-
-
-
-# How to Use 
-1. Clone the repo
-2. Install dependencies
-3. Run the development server
-4. Open the app in your browser at  
-http://localhost:3000/menu?restaurant=spicevilla&table=5
