@@ -253,3 +253,9 @@ export const getOrderByClientOrderId = asyncHandler(async (req, res) => {
     if (!order) throw new ApiError(404, "Order not found");
     return res.status(200).json(new ApiResponse(200, order, "Order found"));
 });
+
+//get all orders (for admin)
+export const getAllOrders = asyncHandler(async (req, res) => {
+    const orders = await Order.find().sort({ createdAt: -1 });
+    return res.status(200).json(new ApiResponse(200, orders, "All orders fetched successfully"));
+});

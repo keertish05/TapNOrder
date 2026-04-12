@@ -15,7 +15,7 @@ const WaiterDashboard = () => {
     // 🔥 FETCH OLD ORDERS
     const fetchOrders = async () => {
       try {
-        const res = await fetch("http://localhost:4003/api/v1/order");
+        const res = await fetch("http://localhost:4003/api/v1/order/all");
         const data = await res.json();
         setOrders(data.data || []);
       } catch (err) {
