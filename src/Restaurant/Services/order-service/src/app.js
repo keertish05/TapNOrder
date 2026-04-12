@@ -6,7 +6,7 @@ const app = express();
 
 // Using middlewares
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     credentials: true,
 }));
 app.use(express.json({limit: "16kb"}));
@@ -17,6 +17,9 @@ app.use(cookieParser());
 // importing and using routes
 import orderRoutes from './routes/order.route.js';
 import dashboardRoutes from './routes/dashboard.route.js';
+import serviceRequestRoutes from './routes/serviceRequest.routes.js';
+
+app.use('/api/v1/service-request', serviceRequestRoutes);
 app.use('/api/v1/order', orderRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 

@@ -12,7 +12,7 @@ const server = http.createServer(app);
 //  attach socket.io
 export const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || "*",
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true
   }
