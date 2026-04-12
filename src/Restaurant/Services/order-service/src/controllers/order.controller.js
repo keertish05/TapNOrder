@@ -4,6 +4,7 @@ import { ApiResponse } from '../utils/apiResponse.js';
 import { Order } from '../models/order.model.js';
 import { PaymentIntent } from '../models/paymentIntent.model.js';
 import axios from 'axios';
+import { io } from "../index.js";
 
 // create a new order
 export const createOrder = asyncHandler(async (req, res) => {
@@ -12,6 +13,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     if (!clientOrderId || !restaurantId || !tableNumber || !items || !items.length) {
         throw new ApiError(400, "Missing required fields (clientOrderId, restaurantId, tableNumber, items)");
     }
+
 
     // 1) If final order already exists for this clientOrderId -> return it (idempotent)
     const existingOrder = await Order.findOne({ clientOrderId });
@@ -25,6 +27,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     const officialMenu = data?.data || [];
     if (!officialMenu.length) throw new ApiError(404, "No menu found for this restaurant");
 
+
     let verifiedItems = [];
     let totalAmount = 0;
     for (const item of items) {
@@ -36,13 +39,13 @@ export const createOrder = asyncHandler(async (req, res) => {
         menuItemId: menuItem._id,
         name: menuItem.name,
         price: menuItem.price,
+        Image: menuItem.image,
         quantity,
         itemTotal
         });
         totalAmount += itemTotal;
     }
     if (verifiedItems.length === 0) throw new ApiError(400, "No valid items found in order");
-
     // 3) Branch: Cash vs Online
     if (paymentMethod === "Cash") {
         // create final order immediately
@@ -63,7 +66,8 @@ export const createOrder = asyncHandler(async (req, res) => {
         paymentStatus: "Pending",
         paymentMethod: "Cash",
         });
-
+        
+        io.emit("orderCreated", newOrder);
         return res.status(201).json(new ApiResponse(201, newOrder, "Order placed successfully"));
     }
 
@@ -95,6 +99,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 
     // call Payment Service to create payment (Razorpay) - it should return razorpayOrderId
     // Payment service endpoint and contract must be agreed; example:
+
     const paymentResp = await axios.post(`${process.env.PAYMENT_SERVICE_URL}/api/v1/payment/create`, {
         amount: totalAmount,
         currency: "INR",
@@ -102,6 +107,7 @@ export const createOrder = asyncHandler(async (req, res) => {
         restaurantId,
         tableNumber
     });
+
 
     const { orderId: razorpayOrderId } = paymentResp.data.data || {};
     if (!razorpayOrderId) {
@@ -159,6 +165,8 @@ export const confirmOrder = asyncHandler(async (req, res) => {
         razorpayPaymentId
     });
 
+    io.emit("orderCreated", newOrder);
+    
     // mark intent completed
     intent.status = "Completed";
     await intent.save();
@@ -214,6 +222,7 @@ export const updateOrderStatus = asyncHandler(async (req, res) => {
         throw new ApiError(404, "Order not found");
     }
 
+    io.emit("orderUpdated", updatedOrder);
     res
         .status(200)
         .json(new ApiResponse(200, updatedOrder, "Order status updated successfully"));
@@ -236,3 +245,11 @@ export const getOrderStatus = asyncHandler(async (req, res) => {
     return res.status(404).json({ success: false, message: "No order or intent found" });
 });
 
+//get order by customer order id (for internal use)
+export const getOrderByClientOrderId = asyncHandler(async (req, res) => {
+    const { clientOrderId } = req.query;
+    if (!clientOrderId) throw new ApiError(400, "clientOrderId is required"); 
+    const order = await Order.findOne({ clientOrderId });
+    if (!order) throw new ApiError(404, "Order not found");
+    return res.status(200).json(new ApiResponse(200, order, "Order found"));
+});

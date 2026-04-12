@@ -10,6 +10,47 @@ export default function Billing({ total }: { total: number }) {
   const serviceCharge = Math.round(total * 0.1);
   const grandTotal = total + tax + serviceCharge + tip;
 
+  const [paymentMethod, setPaymentMethod] = useState<"Cash" | "Online">("Cash");
+
+  const cartItems = [
+  { _id: "69d346af6db7ed920df9e84b", quantity: 2 },
+  ];
+
+  const handleOrder = async () => {
+    try {
+      const response = await fetch("http://localhost:4003/api/v1/order/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          clientOrderId: Date.now().toString(),
+          restaurantId: "690f1bf6a5cd308778a5733c",
+          tableNumber: "12",
+          items: cartItems.map(item => ({
+            menuItemId: item._id,
+            quantity: item.quantity
+          })),
+          paymentMethod
+        })
+      });
+
+      const data = await response.json();
+
+      console.log("FULL RESPONSE:", data);
+
+      if (paymentMethod === "Cash") {
+        alert("Order placed successfully ✅");
+      } else {
+        openRazorpay(data.data);
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong ❌");
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-6 pt-40 pb-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
@@ -132,12 +173,21 @@ export default function Billing({ total }: { total: number }) {
               </div>
               
               <div className="space-y-4">
-                <PaymentMethod icon={<Smartphone className="w-6 h-6" />} label="UPI (GPay, PhonePe)" />
-                <PaymentMethod icon={<CreditCard className="w-6 h-6" />} label="Credit / Debit Card" />
-                <PaymentMethod icon={<Wallet className="w-6 h-6" />} label="Digital Wallets" />
+                <PaymentMethod 
+                    icon={<Smartphone className="w-6 h-6" />} 
+                    label="Pay Now"
+                    onClick={() => setPaymentMethod("Online")}
+                  />
+
+                  <PaymentMethod 
+                    icon={<Wallet className="w-6 h-6" />} 
+                    label="On table"
+                    onClick={() => setPaymentMethod("Cash")}
+                  />
               </div>
 
               <motion.button
+                onClick={handleOrder}
                 whileHover={{ scale: 1.02, y: -5 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full red-gradient text-white py-7 rounded-[2.5rem] font-display font-black text-xl mt-16 shadow-2xl shadow-primary/30 flex items-center justify-center gap-4 group uppercase tracking-[0.2em]"
@@ -220,11 +270,12 @@ function SplitButton({ active, onClick, icon, label, description }: any) {
   );
 }
 
-function PaymentMethod({ icon, label }: any) {
+function PaymentMethod({ icon, label, onClick, active }: any) {
   return (
     <motion.button 
       whileHover={{ x: 10, backgroundColor: 'rgba(255,255,255,0.05)' }}
-      className="w-full p-7 bg-black/5 rounded-[2rem] border border-black/5 flex items-center justify-between transition-all group"
+      onClick={onClick}
+      className={`w-full p-7 rounded-[2rem] border border-black/5 flex items-center justify-between transition-all group ${active ? 'bg-primary text-white' : 'bg-black/5 text-ink/20'}`}
     >
       <div className="flex items-center gap-6">
         <div className="text-accent group-hover:scale-110 transition-transform group-hover:text-black">{icon}</div>
@@ -234,3 +285,31 @@ function PaymentMethod({ icon, label }: any) {
     </motion.button>
   );
 }
+
+const openRazorpay = (orderData: any) => {
+  const options = {
+    key: "rzp_test_ScRjOlvVXds1Ze",
+    amount: orderData.amount * 100,
+    currency: "INR",
+    order_id: orderData.razorpayOrderId,
+
+    handler: async function (response: any) {
+      await fetch("http://localhost:4003/api/v1/order/confirm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          clientOrderId: orderData.clientOrderId,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpayPaymentId: response.razorpay_payment_id
+        })
+      });
+
+      alert("Payment successful 🎉");
+    }
+  };
+
+  const rzp = new (window as any).Razorpay(options);
+  rzp.open();
+};

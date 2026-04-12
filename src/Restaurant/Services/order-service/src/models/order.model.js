@@ -3,11 +3,12 @@ import mongoose from "mongoose";
 const orderItemSchema = new mongoose.Schema({
     menuItemId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "MenuItem",
+        ref: "Dish",
         required: true,
     },
     name: { type: String, required: true },       // Verified name from menu-service
     price: { type: Number, required: true },         // Verified price from menu-service
+    Image:{ type: String,required: true }, // Image URL from menu-service
     quantity: { type: Number, required: true, min: 1 },
     itemTotal: { type: Number, required: true },     // price * quantity (computed)
 });

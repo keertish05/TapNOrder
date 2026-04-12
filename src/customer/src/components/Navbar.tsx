@@ -55,7 +55,7 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
                 Menu
               </NavLink>
 
-              <NavLink
+              {/* <NavLink
                 to={`/billing?${params.toString()}`}
                 className={({ isActive }) =>
                   `text-[10px] font-display font-bold uppercase tracking-[0.3em] transition-colors ${
@@ -63,8 +63,8 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
                   }`
                 }
               >
-                My Orders
-              </NavLink>
+                Billing
+              </NavLink> */}
 
               <NavLink
                 to={`/rewards?${params.toString()}`}
@@ -75,6 +75,17 @@ export default function Navbar({ cartCount, onCartClick, tableId }: NavbarProps)
                 }
               >
                 Rewards
+              </NavLink>
+
+              <NavLink
+                to={`/my-orders?${params.toString()}`}
+                className={({ isActive }) =>
+                  `text-[10px] font-display font-bold uppercase tracking-[0.3em] transition-colors ${
+                    isActive ? "text-[#D32F2F]" : "text-ink/40 hover:text-primary"
+                  }`
+                }
+              >
+                My Orders
               </NavLink>
 
             </div>

@@ -112,3 +112,12 @@ making group ordering easier
 adding a social + interactive layer to restaurants
 
 Basically… turning a normal dinner into a small experience.
+
+
+
+# How to Use 
+1. Clone the repo
+2. Install dependencies
+3. Run the development server
+4. Open the app in your browser at  
+http://localhost:3000/menu?restaurant=spicevilla&table=5

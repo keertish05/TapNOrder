@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Menu from './pages/Menu';
 import Billing from './pages/Billing';
 import Rewards from './pages/Rewards';
+import MyOrders from './pages/MyOrders';
 import Navbar from './components/Navbar';
 import CartDrawer from './components/CartDrawer';
 import { Dish, CartItem } from './types';
@@ -158,6 +159,7 @@ function AppContent() {
           <Route path="/menu" element={<Menu onAddToCart={handleAddToCart} />} />
           <Route path="/billing" element={<Billing total={total} />} />
           <Route path="/rewards" element={<Rewards />} />
+          <Route path="/my-orders" element={<MyOrders />} />
         </Routes>
       </AnimatePresence>
 

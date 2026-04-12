@@ -122,13 +122,12 @@ export const getMenuByRestaurant = asyncHandler(async (req, res) => {
     if (!restaurantId) {
         throw new ApiError(400, "Restaurant ID is required");
     }
-    const menuItems = await MenuItem.find({ restaurantId });
+    const menuItems = await Dish.find({ restaurantId });
     if (!menuItems) {
         throw new ApiError(404, "No menu items found for this restaurant");
     }
     res.status(200).json(new ApiResponse(200, menuItems, "Menu items retrieved successfully"));
 });
-
 
 // Get Dish by restaurant ID (user view)
 export const getDishesByRestaurant = asyncHandler(async (req, res) => {
